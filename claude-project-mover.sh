@@ -121,10 +121,10 @@ move_project() {
     # Replace paths in all files
     for file in "$old_full_path"/*; do
         if [[ -f "$file" ]]; then
-            if [[ "$OSTYPE" == "darwin"* ]]; then
-                sed -i '' "s|$old_escaped|$new_escaped|g" "$file"
-            else
+            if sed --version 2>&1 | grep -q GNU; then
                 sed -i "s|$old_escaped|$new_escaped|g" "$file"
+            else
+                sed -i '' "s|$old_escaped|$new_escaped|g" "$file"
             fi
         fi
     done
